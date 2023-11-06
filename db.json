@@ -5,7 +5,7 @@
           "id": "1",
           "author": {
             "name": "Ivan Martic",
-            "picture": "img/ivan.jpg"
+            "picture": "img/ivan.png"
           },
           "text": "Hello guys! How's everyone doing?",
           "timestamp": 1607862300000
@@ -14,7 +14,7 @@
           "id": "2",
           "author": {
             "name": "Stjepan Liovic",
-            "picture": "img/stjepan.jpg"
+            "picture": "img/stjepan.png"
           },
           "text": "i would suggest having a a look at this new tool! https://www.unitconverters.net/length/miles-to-km.htm",
           "timestamp": 1607871660000
@@ -24,7 +24,7 @@
           "parent_id": "2",
           "author": {
             "name": "Martin Durkovic",
-            "picture": "img/martin.jpg"
+            "picture": "img/martin.png"
           },
           "text": "Thanks! Will have a look.",
           "timestamp": 1607872200000
