@@ -1,11 +1,19 @@
 import {CommentTypes} from '../types';
+import CommentForm from './CommentForm';
 
 type CommentProps = {
     comment: CommentTypes;
     getReplies: (replyId: string) => CommentTypes[];
+    setActiveComment: (comment: CommentTypes | null) => void;
+    addComment: (text:string, parendId?:string) => void;
+    activeComment: CommentTypes | null;
+    parentId?: null | string;
+    replyNesting: number;
 }
 
-const Comment = ({comment, getReplies}:CommentProps) => {
+const Comment = ({comment, getReplies, setActiveComment, activeComment, addComment, replyNesting}:CommentProps) => {
+    const isReplaying = activeComment && activeComment.id === comment.id;
+    const replyId = comment.id;
 
     const formatTimestamp = (timestamp: number) => {
         const date = new Date(timestamp);
@@ -26,12 +34,31 @@ const Comment = ({comment, getReplies}:CommentProps) => {
                 <div className='comment__timestamp'>{formatTimestamp(comment.timestamp)}</div>
             </div>
             <div className='comment__text'>{comment.text}</div>
-            
-                <div className='comment__replies'>
-                    {getReplies(comment.id).map((reply) => (
-                        <Comment key={reply.id} comment={reply} getReplies={getReplies} />
-                    ))}
-                </div>
+            <button
+                onClick={() => {
+                    (activeComment === null) ? setActiveComment(comment) : setActiveComment(null)
+                }}
+                disabled={replyNesting >= 2}
+            >
+                reply
+            </button>
+            {isReplaying && (
+                <CommentForm handleSubmit={(text) => addComment(text, replyId)}/>
+            )}
+            <div className='comment__replies'>
+                {getReplies(comment.id).map((reply) => (
+                    <Comment 
+                        key={reply.id} 
+                        comment={reply} 
+                        getReplies={getReplies} 
+                        setActiveComment={setActiveComment} 
+                        activeComment={activeComment}
+                        parentId={comment.id}
+                        addComment={addComment}
+                        replyNesting={replyNesting + 1}
+                    />
+                ))}
+            </div>
             
         </div>
     </div>

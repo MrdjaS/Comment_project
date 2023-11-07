@@ -1,13 +1,9 @@
 import React from 'react'
 import CommentsContainer from '../containers/CommentsContainer'
 
-type UserProps = {
-  currentUserId: string;
-}
-
-const CommentsPage = ({currentUserId}:UserProps) => {
+const CommentsPage = () => {
   return (
-    <CommentsContainer currentUserId={currentUserId}/>
+    <CommentsContainer />
   )
 }
 

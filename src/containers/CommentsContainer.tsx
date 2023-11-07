@@ -1,33 +1,48 @@
 import { useEffect, useState } from 'react'
 import { constants } from '../contants';
-import { CommentTypes } from '../types';
+import { CommentTypes, DataObject } from '../types';
 import Comment from '../UI/Comment';
+import CommentForm from '../UI/CommentForm';
+import { createComment } from '../utils';
 
-type UserProps = {
-    currentUserId: string;
-}
-
-const CommentsContainer = ({currentUserId}:UserProps) => {
+const CommentsContainer = () => {
   const [dbComments, setDbComments] = useState<CommentTypes[]>([]);
   const rootComments = dbComments.filter((comment) => !comment.parent_id);
+  const [activeComment, setActiveComment] = useState<CommentTypes|null>(null);
+
+  const addComment = (text:string, parendId?:string) => {
+    const newComment = createComment(text, parendId);
+    const updatedComments = [...dbComments, newComment];
+    const dataObject = {comments: updatedComments};
+    setDbComments(updatedComments);
+    addCommentToDb(dataObject);
+    setActiveComment(null);
+  }
+
+  const addCommentToDb = async (data:DataObject) => {
+      try {
+        const response = await fetch(`${constants.jsonUrl}/data`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (response.ok) {
+          console.log('radi');
+        } else {
+          console.log('ne radi');
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+  };
 
   const getReplies = (replyId: string) => {
     return dbComments
       .filter((comment) => comment.parent_id === replyId)
       .sort((a: CommentTypes, b: CommentTypes) => a.timestamp - b.timestamp);
   };
-
-  // const getFormattedDate = () => {
-  //   const topComment = rootComments[0];
-  //   console.log(rootComments);
-  //   const date = new Date(topComment.timestamp);
-  //   return date.toLocaleDateString('en-US', {
-  //     weekday: 'long',
-  //     year: 'numeric',
-  //     month: '2-digit',
-  //     day: '2-digit',
-  //   });
-  // };
 
   const fetchComments = async () => {
     try {
@@ -45,10 +60,18 @@ const CommentsContainer = ({currentUserId}:UserProps) => {
 
   return (
     <div>
-      {/* <div>{getFormattedDate()}</div> */}
       {rootComments.map((rootComment) => (
-        <Comment key={rootComment.id} comment={rootComment} getReplies={getReplies}/>
+        <Comment 
+          key={rootComment.id} 
+          comment={rootComment} 
+          getReplies={getReplies} 
+          setActiveComment={setActiveComment} 
+          activeComment={activeComment}
+          addComment={addComment}
+          replyNesting={0}
+        />
       ))}
+      <CommentForm handleSubmit={addComment}/>
     </div>
   )
 }

@@ -7,5 +7,9 @@ export interface CommentTypes {
   };
   text: string;
   timestamp: number;
-  replies: CommentTypes[]; // Add a replies property
+  replies?: CommentTypes[];
+}
+
+export interface DataObject {
+    comments: CommentTypes[];
 }
