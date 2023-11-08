@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { constants } from '../contants';
 import { CommentTypes, DataObject } from '../types';
-import Comment from '../UI/Comment';
-import CommentForm from '../UI/CommentForm';
+import CommentsList from '../UI/CommentsList';
 import { createComment } from '../utils';
+
 
 const CommentsContainer = () => {
   const [dbComments, setDbComments] = useState<CommentTypes[]>([]);
-  const rootComments = dbComments.filter((comment) => !comment.parent_id);
   const [activeComment, setActiveComment] = useState<CommentTypes|null>(null);
 
   const addComment = (text:string, parendId?:string) => {
@@ -21,18 +20,13 @@ const CommentsContainer = () => {
 
   const addCommentToDb = async (data:DataObject) => {
       try {
-        const response = await fetch(`${constants.jsonUrl}/data`, {
+        await fetch(`${constants.jsonUrl}/data`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         });
-        if (response.ok) {
-          console.log('radi');
-        } else {
-          console.log('ne radi');
-        }
       } catch (error) {
         console.error("Error:", error);
       }
@@ -42,6 +36,29 @@ const CommentsContainer = () => {
     return dbComments
       .filter((comment) => comment.parent_id === replyId)
       .sort((a: CommentTypes, b: CommentTypes) => a.timestamp - b.timestamp);
+  };
+
+  const groupCommentsByDate = () => {
+    const groupedComments: Record<string, CommentTypes[]> = {};
+  
+    dbComments
+      .filter((comment) => !comment.parent_id)
+      .forEach((comment) => {
+        const date = new Date(comment.timestamp);
+        const weekday = date.toLocaleDateString('en-US', { weekday: 'long' });
+        const day = date.toLocaleDateString('en-US', { day: 'numeric' });
+        const month = date.toLocaleDateString('en-US', { month: 'numeric' });
+        const year = date.toLocaleDateString('en-US', { year: 'numeric' });
+  
+        const formattedDate = `${weekday}, ${day}.${month}.${year}`;
+  
+        if (!groupedComments[formattedDate]) {
+          groupedComments[formattedDate] = [];
+        }
+        groupedComments[formattedDate].push(comment);
+      });
+  
+    return groupedComments;
   };
 
   const fetchComments = async () => {
@@ -59,20 +76,13 @@ const CommentsContainer = () => {
   },[])
 
   return (
-    <div>
-      {rootComments.map((rootComment) => (
-        <Comment 
-          key={rootComment.id} 
-          comment={rootComment} 
-          getReplies={getReplies} 
-          setActiveComment={setActiveComment} 
-          activeComment={activeComment}
-          addComment={addComment}
-          replyNesting={0}
-        />
-      ))}
-      <CommentForm handleSubmit={addComment}/>
-    </div>
+    <CommentsList 
+      getReplies={getReplies}
+      setActiveComment={setActiveComment}
+      addComment={addComment}
+      activeComment={activeComment}
+      groupCommentsByDate={groupCommentsByDate}
+    />
   )
 }
 

@@ -2,13 +2,9 @@
 
 body {
   margin: 0;
+  overflow: hidden;
   font-family: $base-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $background-blue;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }

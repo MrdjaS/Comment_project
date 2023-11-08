@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from 'react'
+import { useState, FormEvent } from 'react'
+import './style.scss'
 
 type submitProps = {
     handleSubmit: (text:string, parendId?:string) => void
@@ -13,11 +14,10 @@ const CommentForm = ({handleSubmit}: submitProps) => {
         setCommentText('');
     }
     return (
-        <form onSubmit={onSubmit}>
-            <textarea value={commentText} onChange={(e) => setCommentText(e.target.value)}/>
-            <button disabled={isTextareaEmpty}>Send</button>
+        <form className='comment-form' onSubmit={onSubmit}>
+            <textarea placeholder='...type something' className='comment-form__textarea' value={commentText} onChange={(e) => setCommentText(e.target.value)}/>
+            <button className='comment-form__btn' disabled={isTextareaEmpty}>Send</button>
         </form>
-        
     )
 }
 

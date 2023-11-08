@@ -1,0 +1,58 @@
+@use '../../variables.scss' as *;
+
+.comment__img-wrapper {
+    height: 100%;
+    margin-right: 9px;
+}
+
+.comment__container {
+    width: 100%;
+}
+
+.comment__wrap {
+    display: flex;
+    margin: 9px 0 30px;
+}
+
+.comment__timestamp {
+    font-size: 10px;
+    line-height: 12px;
+    color: $text-grey;
+    margin-right: 13px;
+}
+
+.comment__content {
+    padding: 14px 23px 24px;
+    background-color: $white;
+    border-radius: 5px;
+    max-width: 448px;
+    width: 100%;
+}
+
+.comment__author {
+    font-size: 12px;
+    line-height: 14.52px;
+    font-weight: $font-semi-bold;
+    color: $text-black;
+    margin-bottom: 9px;
+}
+
+.comment__text {
+    font-size: 12px;
+    line-height: 14.52px;
+    color: $text-grey;
+}
+
+.comment__replies-line {
+    width: 13px;
+    height: 49px;
+    border-left: 1px solid $text-grey;
+    border-bottom: 1px solid $text-grey;
+    position: absolute;
+    left: -28px;
+    top: -31px;
+}
+
+.comment__replies {
+    position: relative;  
+} 

@@ -1,12 +1,20 @@
 @use './variables.scss' as *;
 
-.app {
-  margin: 103px 100px 83px;
-  padding: 34px 36px;
-  background-color: $background-grey;
-  border-radius: 5px;
+.app__container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
-.comment__replies {
-  margin-left: 200px;
+.app__content {
+  margin-top: 103px;
+  padding: 34px 36px;
+  background-color: $background-grey;
+  border-radius: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 73%;
+  height: 62.2%;
 }
