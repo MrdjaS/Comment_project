@@ -39,6 +39,7 @@ const CommentsContainer = () => {
   };
 
   const groupCommentsByDate = () => {
+    // Function for transforming timestamp to local date format and grouping comments based on date
     const groupedComments: Record<string, CommentTypes[]> = {};
   
     dbComments

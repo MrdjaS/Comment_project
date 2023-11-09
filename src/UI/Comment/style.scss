@@ -1,5 +1,9 @@
 @use '../../variables.scss' as *;
 
+.comment {
+    display: flex;
+}
+
 .comment__img-wrapper {
     height: 100%;
     margin-right: 9px;
@@ -27,6 +31,16 @@
     border-radius: 5px;
     max-width: 448px;
     width: 100%;
+
+    @media only screen and (max-width: $lg) {
+        max-width: none;
+        padding: 13px;
+        width: calc(100% - 26px);
+    }
+
+    @media only screen and (max-width: $sm) {
+        width: 65%;
+    }
 }
 
 .comment__author {
@@ -41,6 +55,7 @@
     font-size: 12px;
     line-height: 14.52px;
     color: $text-grey;
+    word-wrap: break-word;
 }
 
 .comment__replies-line {

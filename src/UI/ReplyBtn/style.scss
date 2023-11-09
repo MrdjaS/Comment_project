@@ -9,4 +9,9 @@
     line-height: 12px;
     font-weight: $font-semi-bold;
     color: $text-blue;
+    cursor: pointer;
+    
+    &:hover {
+        text-decoration: underline;
+    }
 }

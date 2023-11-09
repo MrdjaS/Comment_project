@@ -14,7 +14,7 @@ type CommentProps = {
 }
 
 const Comment = ({comment, getReplies, setActiveComment, activeComment, addComment, replyNesting}:CommentProps) => {
-    const isReplaying = activeComment && activeComment.id === comment.id;
+    const isReplying = activeComment && activeComment.id === comment.id;
     const replyId = comment.id;
 
     const calculateNumOfReplies = () => {
@@ -33,7 +33,6 @@ const Comment = ({comment, getReplies, setActiveComment, activeComment, addComme
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     };
-    
 
   return (
     <div className='comment'>
@@ -47,16 +46,18 @@ const Comment = ({comment, getReplies, setActiveComment, activeComment, addComme
             </div>
             <div className='comment__wrap'>
                 <div className='comment__timestamp'>{formatTimestamp(comment.timestamp)}</div>
-                <ReplyBtn 
+                {(replyNesting < 2) && (
+                    <ReplyBtn 
                     comment={comment}
                     activeComment={activeComment}
                     setActiveComment={setActiveComment}
                     calculateNumOfReplies={calculateNumOfReplies}
                     replyNesting={replyNesting}
                 />
+                )}
             </div>
-            {isReplaying && (
-                <CommentForm handleSubmit={(text) => addComment(text, replyId)}/>
+            {isReplying && (
+                <CommentForm handleSubmit={(text) => addComment(text, replyId)} isReplying={isReplying}/>
             )}
                 {getReplies(comment.id).map((reply) => (
                 <div key={reply.id} className='comment__replies'>
