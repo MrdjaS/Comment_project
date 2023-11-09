@@ -1,0 +1,30 @@
+@use './variables.scss' as *;
+
+.app__container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.app__content {
+  position: relative;
+  margin-top: 103px;
+  padding: 34px 36px 13px;
+  background-color: $background-grey;
+  border-radius: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 73%;
+  height: 62.2%;
+
+  @media only screen and (max-width: $lg) {
+    padding: 15px 13px 13px;
+  }
+
+  @media only screen and (max-width: $md) {
+    margin-top: 40px;
+    width: 90%;
+  }
+}

@@ -1,0 +1,57 @@
+@use '../../variables.scss' as *;
+
+.comment-form {
+    display: flex;
+    height: 34px;
+    padding: 7px 18px 7px 23px;
+    background-color: $white;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 13px;
+    width: calc(100% - 113px);
+    box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.34);
+    -webkit-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.34);
+    -moz-box-shadow: -1px 4px 7px -1px rgba(0,0,0,0.34);
+
+    @media only screen and (max-width: $lg) {
+        width: calc(100% - 67px);
+    }
+}
+
+.scroll-active {
+    position: sticky;
+    bottom: 0px;
+    width: calc(100% - 41px);
+}
+
+.comment-form--reply {
+    position: sticky;
+    margin-bottom: 40px;
+}
+
+.comment-form__textarea {
+    width: 100%;
+    border: 0;
+    padding: 0;
+    resize: none;
+    vertical-align: middle;
+    outline: none;
+    font-family: $base-font;
+    font-size: 10px;
+    line-height: 34px;
+    font-weight: $font-bold;
+    color: $text-black;
+}
+
+.comment-form__btn {
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: $font-bold;
+    color: $text-black;
+    background-color: $btn-grey;
+    border: none;
+    border-radius: 5px;
+    width: 79px;
+    font-family: $base-font;
+    cursor: pointer;
+}
